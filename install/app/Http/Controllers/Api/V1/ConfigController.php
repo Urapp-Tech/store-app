@@ -389,7 +389,7 @@ class ConfigController extends Controller
                 $settings[$key] = $single_value;
             }
         }
-        
+
         $reviews = ReactTestimonial::get();
 
         return  response()->json(
@@ -467,7 +467,7 @@ class ConfigController extends Controller
                         $settings[$key] = $single_value;
                     }
                 }
-        
+
         $criterias = FlutterSpecialCriteria::get();
 
         return  response()->json(
@@ -495,7 +495,7 @@ class ConfigController extends Controller
                 'download_user_app_title'=>(isset($settings['download_user_app_title']) )  ? $settings['download_user_app_title'] : null ,
                 'download_user_app_sub_title'=>(isset($settings['download_user_app_sub_title']) )  ? $settings['download_user_app_sub_title'] : null ,
                 'download_user_app_image'=>(isset($settings['download_user_app_image']) )  ? $settings['download_user_app_image'] : null ,
-                
+
                 'special_criterias'=>(isset($criterias) )  ? $criterias : null ,
 
 
@@ -537,7 +537,7 @@ class ConfigController extends Controller
             return [];
         }
 
-        $methods = DB::table('addon_settings')->where('is_active',1)->whereIn('settings_type', ['payment_config'])->whereIn('key_name', ['ssl_commerz','paypal','stripe','razor_pay','senang_pay','paytabs','paystack','paymob_accept','paytm','flutterwave','liqpay','bkash','mercadopago'])->get();
+        $methods = DB::table('addon_settings')->where('is_active',1)->whereIn('settings_type', ['payment_config'])->whereIn('key_name', ['ssl_commerz','paypal','stripe','razor_pay','senang_pay','paytabs','paystack','paymob_accept','paytm','flutterwave','liqpay','bkash','mercadopago', 'payfast'])->get();
         $env = env('APP_ENV') == 'live' ? 'live' : 'test';
         $credentials = $env . '_values';
 
