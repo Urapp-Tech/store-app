@@ -14,6 +14,7 @@ use App\Http\Controllers\RazorPayController;
 use App\Http\Controllers\SenangPayController;
 use App\Http\Controllers\MercadoPagoController;
 use App\Http\Controllers\BkashPaymentController;
+use App\Http\Controllers\PayFastController;
 use App\Http\Controllers\PaystackController;
 
 /*
@@ -170,6 +171,13 @@ if (!$is_published) {
             Route::any('pay', [PaytabsController::class, 'payment'])->name('pay');
             Route::any('callback', [PaytabsController::class, 'callback'])->name('callback');
             Route::any('response', [PaytabsController::class, 'response'])->name('response');
+        });
+
+        //PAYFAST
+        Route::group(['prefix' => 'payfast', 'as' => 'payfast.'], function () {
+            Route::get('pay', [PayFastController::class, 'index'])->name('pay');
+            Route::any('callback', [PayFastController::class, 'return_payfast_pay'])->name('callback');
+            Route::any('webhook', [PayFastController::class, 'webhookAction'])->name('webhook');
         });
     });
 }

@@ -122,7 +122,7 @@ class BusinessSettingsController extends Controller
             'home_delivery_status' => 'required_without:takeaway_status',
             'takeaway_status' => 'required_without:home_delivery_status',
         ]);
-        
+
         DB::table('business_settings')->updateOrInsert(['key' => 'order_delivery_verification'], [
             'value' => $request['odc']
         ]);
@@ -446,7 +446,7 @@ class BusinessSettingsController extends Controller
                 }
             }
         }
-        $data_values = Setting::whereIn('settings_type', ['payment_config'])->whereIn('key_name', ['ssl_commerz','paypal','stripe','razor_pay','senang_pay','paytabs','paystack','paymob_accept','paytm','flutterwave','liqpay','bkash','mercadopago'])->get();
+        $data_values = Setting::whereIn('settings_type', ['payment_config'])->whereIn('key_name', ['ssl_commerz','paypal','stripe','razor_pay','senang_pay','paytabs','paystack','paymob_accept','paytm','flutterwave','liqpay','bkash','mercadopago', 'payfast'])->get();
 
         return view('admin-views.business-settings.payment-index', compact('published_status', 'payment_url','data_values'));
     }
@@ -741,6 +741,31 @@ class BusinessSettingsController extends Controller
                 ]),
                 'updated_at' => now()
             ]);
+        } elseif ($name == 'payfast') {
+            $payment = BusinessSetting::where('key', 'payfast')->first();
+            if (isset($payment) == false) {
+                DB::table('business_settings')->insert([
+
+                    'key'        => 'payfast',
+                    'value'      => json_encode([
+                        'status'        => 1,
+                        'secured_key'    => '',
+                        'merchant_id' => '',
+                    ]),
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            } else {
+                DB::table('business_settings')->where(['key' => 'payfast'])->update([
+                    'key'        => 'payfast',
+                    'value'      => json_encode([
+                        'status'        => $request['status'],
+                        'secured_key'    => $request['secured_key'],
+                        'merchant_id' => $request['merchant_id'],
+                    ]),
+                    'updated_at' => now(),
+                ]);
+            }
         }
 
         Toastr::success(translate('messages.payment_settings_updated'));
@@ -759,7 +784,7 @@ class BusinessSettingsController extends Controller
         }
 
         $validation = [
-            'gateway' => 'required|in:ssl_commerz,paypal,stripe,razor_pay,senang_pay,paytabs,paystack,paymob_accept,paytm,flutterwave,liqpay,bkash,mercadopago',
+            'gateway' => 'required|in:ssl_commerz,paypal,stripe,razor_pay,senang_pay,paytabs,paystack,paymob_accept,paytm,flutterwave,liqpay,bkash,mercadopago,payfast',
             'mode' => 'required|in:live,test'
         ];
 
@@ -853,6 +878,12 @@ class BusinessSettingsController extends Controller
                 'app_secret' => 'required',
                 'username' => 'required',
                 'password' => 'required',
+            ];
+        } elseif ($request['gateway'] == 'payfast') {
+            $additional_data = [
+                'status' => 'required|in:1,0',
+                'secured_key' => 'required',
+                'merchant_id' => 'required',
             ];
         }
 
@@ -3341,7 +3372,7 @@ class BusinessSettingsController extends Controller
             'title' => 'required|max:100',
             'sub_title' => 'required'
         ]);
-        
+
         if($request->title[array_search('default', $request->lang)] == ''){
             Toastr::error(translate('default_data_is_required'));
             return back();
@@ -3445,7 +3476,7 @@ class BusinessSettingsController extends Controller
             'title' => 'required|max:100',
             'sub_title' => 'required'
         ]);
-        
+
         if($request->title[array_search('default', $request->lang)] == ''){
             Toastr::error(translate('default_data_is_required'));
             return back();
@@ -3548,7 +3579,7 @@ class BusinessSettingsController extends Controller
         $request->validate([
             'title' => 'required|max:100',
         ]);
-        
+
         if($request->title[array_search('default', $request->lang)] == ''){
             Toastr::error(translate('default_data_is_required'));
             return back();
@@ -4161,17 +4192,17 @@ class BusinessSettingsController extends Controller
                 if ($business_title == null) {
                     $business_title = new DataSetting();
                 }
-    
+
                 $business_title->key = 'business_title';
                 $business_title->type = 'react_landing_page';
                 $business_title->value = $request->business_title[array_search('default', $request->lang)];
                 $business_title->save();
-    
+
                 $business_sub_title = DataSetting::where('type', 'react_landing_page')->where('key', 'business_sub_title')->first();
                 if ($business_sub_title == null) {
                     $business_sub_title = new DataSetting();
                 }
-    
+
                 $business_sub_title->key = 'business_sub_title';
                 $business_sub_title->type = 'react_landing_page';
                 $business_sub_title->value = $request->business_sub_title[array_search('default', $request->lang)];
@@ -4185,7 +4216,7 @@ class BusinessSettingsController extends Controller
                 $business_image->type = 'react_landing_page';
                 $business_image->value = $request->has('image') ? Helpers::update('business_image/', $business_image->value, 'png', $request->file('image')) : $business_image->value;
                 $business_image->save();
-    
+
                 $data = [];
                 $default_lang = str_replace('_', '-', app()->getLocale());
                 foreach ($request->lang as $index => $key) {
@@ -4240,7 +4271,7 @@ class BusinessSettingsController extends Controller
                         }
                     }
                 }
-    
+
                 DB::table('data_settings')->updateOrInsert(['key' => 'download_business_app_links', 'type' => 'react_landing_page'], [
                     'value' => json_encode([
                         'seller_playstore_url_status' => $request['seller_playstore_url_status'],
@@ -4253,25 +4284,25 @@ class BusinessSettingsController extends Controller
                         'dm_appstore_url' => $request['dm_appstore_url'],
                     ])
                 ]);
-    
-    
+
+
                 Toastr::success(translate('messages.business_section_updated'));
         } elseif ($tab == 'header-section') {
                 $header_title = DataSetting::where('type', 'react_landing_page')->where('key', 'header_title')->first();
                 if ($header_title == null) {
                     $header_title = new DataSetting();
                 }
-    
+
                 $header_title->key = 'header_title';
                 $header_title->type = 'react_landing_page';
                 $header_title->value = $request->header_title[array_search('default', $request->lang)];
                 $header_title->save();
-    
+
                 $header_sub_title = DataSetting::where('type', 'react_landing_page')->where('key', 'header_sub_title')->first();
                 if ($header_sub_title == null) {
                     $header_sub_title = new DataSetting();
                 }
-    
+
                 $header_sub_title->key = 'header_sub_title';
                 $header_sub_title->type = 'react_landing_page';
                 $header_sub_title->value = $request->header_sub_title[array_search('default', $request->lang)];
@@ -4281,12 +4312,12 @@ class BusinessSettingsController extends Controller
                 if ($header_tag_line == null) {
                     $header_tag_line = new DataSetting();
                 }
-    
+
                 $header_tag_line->key = 'header_tag_line';
                 $header_tag_line->type = 'react_landing_page';
                 $header_tag_line->value = $request->header_tag_line[array_search('default', $request->lang)];
                 $header_tag_line->save();
-    
+
                 $header_icon = DataSetting::where('type', 'react_landing_page')->where('key', 'header_icon')->first();
                 if ($header_icon == null) {
                     $header_icon = new DataSetting();
@@ -4304,7 +4335,7 @@ class BusinessSettingsController extends Controller
                 $header_banner->type = 'react_landing_page';
                 $header_banner->value = $request->has('banner_image') ? Helpers::update('header_banner/', $header_banner->value, 'png', $request->file('banner_image')) : $header_banner->value;
                 $header_banner->save();
-    
+
                 $default_lang = str_replace('_', '-', app()->getLocale());
                 foreach ($request->lang as $index => $key) {
                     if ($default_lang == $key && !($request->header_title[$index])) {
@@ -4383,24 +4414,24 @@ class BusinessSettingsController extends Controller
                         }
                     }
                 }
-    
-                Toastr::success(translate('messages.header_section_updated')); 
+
+                Toastr::success(translate('messages.header_section_updated'));
         } elseif ($tab == 'company-section') {
                 $company_title = DataSetting::where('type', 'react_landing_page')->where('key', 'company_title')->first();
                 if ($company_title == null) {
                     $company_title = new DataSetting();
                 }
-    
+
                 $company_title->key = 'company_title';
                 $company_title->type = 'react_landing_page';
                 $company_title->value = $request->company_title[array_search('default', $request->lang)];
                 $company_title->save();
-    
+
                 $company_sub_title = DataSetting::where('type', 'react_landing_page')->where('key', 'company_sub_title')->first();
                 if ($company_sub_title == null) {
                     $company_sub_title = new DataSetting();
                 }
-    
+
                 $company_sub_title->key = 'company_sub_title';
                 $company_sub_title->type = 'react_landing_page';
                 $company_sub_title->value = $request->company_sub_title[array_search('default', $request->lang)];
@@ -4410,7 +4441,7 @@ class BusinessSettingsController extends Controller
                 if ($company_description == null) {
                     $company_description = new DataSetting();
                 }
-    
+
                 $company_description->key = 'company_description';
                 $company_description->type = 'react_landing_page';
                 $company_description->value = $request->company_description[array_search('default', $request->lang)];
@@ -4420,7 +4451,7 @@ class BusinessSettingsController extends Controller
                 if ($company_button_name == null) {
                     $company_button_name = new DataSetting();
                 }
-    
+
                 $company_button_name->key = 'company_button_name';
                 $company_button_name->type = 'react_landing_page';
                 $company_button_name->value = $request->company_button_name[array_search('default', $request->lang)];
@@ -4430,12 +4461,12 @@ class BusinessSettingsController extends Controller
                 if ($company_button_url == null) {
                     $company_button_url = new DataSetting();
                 }
-    
+
                 $company_button_url->key = 'company_button_url';
                 $company_button_url->type = 'react_landing_page';
                 $company_button_url->value = $request->company_button_url;
                 $company_button_url->save();
-    
+
                 $default_lang = str_replace('_', '-', app()->getLocale());
                 foreach ($request->lang as $index => $key) {
                     if ($default_lang == $key && !($request->company_title[$index])) {
@@ -4539,8 +4570,8 @@ class BusinessSettingsController extends Controller
                         }
                     }
                 }
-    
-                Toastr::success(translate('messages.company_section_updated')); 
+
+                Toastr::success(translate('messages.company_section_updated'));
 
         } else if ($tab == 'promotion-banner') {
                 $data = [];
@@ -4561,7 +4592,7 @@ class BusinessSettingsController extends Controller
                     // 'title' => $request->title,
                     // 'sub_title' => $request->sub_title,
                 ]);
-    
+
                 DB::table('data_settings')->updateOrInsert(['key' => 'promotion_banner','type' => 'react_landing_page'], [
                     'value' => json_encode($data),
                 ]);
@@ -5410,7 +5441,7 @@ class BusinessSettingsController extends Controller
         $request->validate([
             'title' => 'required|max:100',
         ]);
-        
+
         if($request->title[array_search('default', $request->lang)] == ''){
             Toastr::error(translate('default_data_is_required'));
             return back();
@@ -5513,7 +5544,7 @@ class BusinessSettingsController extends Controller
         } else if ($tab == 'refund-order') {
             return view('admin-views.business-settings.email-format-setting.'.$type.'-email-formats.refund-order-format',compact('template'));
         }
-  
+
     }
 
     public function update_email_index(Request $request,$type,$tab)
@@ -5525,73 +5556,73 @@ class BusinessSettingsController extends Controller
 
         if ($tab == 'new-order') {
             $email_type = 'new_order';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'new_order')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'new_order')->first();
         }elseif($tab == 'forget-password'){
             $email_type = 'forget_password';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'forget_password')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'forget_password')->first();
         }elseif($tab == 'store-registration'){
             $email_type = 'store_registration';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'store_registration')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'store_registration')->first();
         }elseif($tab == 'dm-registration'){
             $email_type = 'dm_registration';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'dm_registration')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'dm_registration')->first();
         }elseif($tab == 'registration'){
             $email_type = 'registration';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'registration')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'registration')->first();
         }elseif($tab == 'approve'){
             $email_type = 'approve';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'approve')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'approve')->first();
         }elseif($tab == 'deny'){
             $email_type = 'deny';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'deny')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'deny')->first();
         }elseif($tab == 'withdraw-request'){
             $email_type = 'withdraw_request';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'withdraw_request')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'withdraw_request')->first();
         }elseif($tab == 'withdraw-approve'){
             $email_type = 'withdraw_approve';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'withdraw_approve')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'withdraw_approve')->first();
         }elseif($tab == 'withdraw-deny'){
             $email_type = 'withdraw_deny';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'withdraw_deny')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'withdraw_deny')->first();
         }elseif($tab == 'campaign-request'){
             $email_type = 'campaign_request';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'campaign_request')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'campaign_request')->first();
         }elseif($tab == 'campaign-approve'){
             $email_type = 'campaign_approve';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'campaign_approve')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'campaign_approve')->first();
         }elseif($tab == 'campaign-deny'){
             $email_type = 'campaign_deny';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'campaign_deny')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'campaign_deny')->first();
         }elseif($tab == 'refund-request'){
             $email_type = 'refund_request';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'refund_request')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'refund_request')->first();
         }elseif($tab == 'login'){
             $email_type = 'login';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'login')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'login')->first();
         }elseif($tab == 'suspend'){
             $email_type = 'suspend';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'suspend')->first();  
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'suspend')->first();
         }elseif($tab == 'cash-collect'){
             $email_type = 'cash_collect';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'cash_collect')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'cash_collect')->first();
         }elseif($tab == 'registration-otp'){
             $email_type = 'registration_otp';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'registration_otp')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'registration_otp')->first();
         }elseif($tab == 'login-otp'){
             $email_type = 'login_otp';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'login_otp')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'login_otp')->first();
         }elseif($tab == 'order-verification'){
             $email_type = 'order_verification';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'order_verification')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'order_verification')->first();
         }elseif($tab == 'refund-request-deny'){
             $email_type = 'refund_request_deny';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'refund_request_deny')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'refund_request_deny')->first();
         }elseif($tab == 'add-fund'){
             $email_type = 'add_fund';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'add_fund')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'add_fund')->first();
         }elseif($tab == 'refund-order'){
             $email_type = 'refund_order';
-            $template = EmailTemplate::where('type',$type)->where('email_type', 'refund_order')->first();   
+            $template = EmailTemplate::where('type',$type)->where('email_type', 'refund_order')->first();
         }
 
         if ($template == null) {
@@ -5865,7 +5896,7 @@ class BusinessSettingsController extends Controller
 
         Toastr::success(translate('messages.email_status_updated'));
         return back();
-  
+
     }
 
     public function login_url_page(){
@@ -6007,7 +6038,7 @@ class BusinessSettingsController extends Controller
         if(!File::exists('resources/views/layouts/landing/custom/index.blade.php') && ($request->landing_integration_via == 'file_upload') && (!$request->file('file_upload'))){
             $validator->getMessageBag()->add('file_upload', translate('messages.zip_file_is_required'));
         }
-        
+
         if ($validator->errors()->count() > 0) {
             $error = Helpers::error_processor($validator);
             return response()->json(['status' => 'error', 'message' => $error[0]['message']]);
@@ -6018,7 +6049,7 @@ class BusinessSettingsController extends Controller
         ]);
         $status = 'success';
         $message = translate('updated_successfully!');
-        
+
         if($request->landing_integration_via == 'file_upload'){
 
             $file = $request->file('file_upload');
@@ -6046,7 +6077,7 @@ class BusinessSettingsController extends Controller
                     $status = 'error';
                     $message = translate('file_upload_fail!');
                 }
-        
+
                 Storage::delete($tempPath);
             }
         }

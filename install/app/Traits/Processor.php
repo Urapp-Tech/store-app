@@ -82,8 +82,27 @@ trait  Processor
     {
         $token_string = 'payment_method=' . $payment_info->payment_method . '&&transaction_reference=' . $payment_info->transaction_id;
         if (in_array($payment_info->payment_platform, ['web', 'app']) && $payment_info['external_redirect_link'] != null) {
-            return redirect($payment_info['external_redirect_link'] . '?flag=' . $payment_flag . '&&token=' . base64_encode($token_string));
+            return redirect($payment_info['external_redirect_link'] . $this->concat_payment_flag($payment_info['external_redirect_link'], $payment_flag) . '&&token=' . base64_encode($token_string));
         }
         return redirect()->route('payment-' . $payment_flag, ['token' => base64_encode($token_string)]);
+    }
+
+    /**
+     * Concatenate payment flag and status as query parameters to the given URL.
+     *
+     * @param string $external_redirect_link The URL to concatenate parameters to.
+     * @param string $payment_flag The payment flag to append as a query parameter.
+     * @return string The modified URL with appended query parameters.
+     */
+    public function concat_payment_flag($external_redirect_link = '', $payment_flag){
+        $status_params = '';
+        if (strpos($external_redirect_link, '?') !== false) {
+            // URL already has query parameters, append using '&'
+            $status_params = '&flag=' . $payment_flag . '&status=' . $payment_flag ;
+        } else {
+            // URL does not have query parameters, append using '?'
+            $status_params = '?flag=' . $payment_flag . '&status=' . $payment_flag ;
+        }
+        return $status_params;
     }
 }
