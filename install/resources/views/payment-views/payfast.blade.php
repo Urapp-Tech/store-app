@@ -24,7 +24,7 @@
 
                     {{-- @php($data->hashed_string = md5($secretkey . urldecode($data->amount) )) --}}
 
-                    <form id="form" method="post" action="https://ipguat.apps.net.pk/Ecommerce/api/Transaction/PostTransaction">
+                    <form id="form" method="post" action="{{ config('payfast.transaction_url') }}">
                         @csrf
                         <input type="hidden" name="MERCHANT_NAME" value="{{$tokenData['NAME']}}" />
                         <input type="hidden" name="MERCHANT_ID" value="{{ $data->merchantId }}">

@@ -39,7 +39,8 @@ class PayFastController extends Controller
                 'merchantId' => env('PAYFAST_MERCHANT_ID', $this->config_values->merchant_id),
                 'securedKey' => env('PAYFAST_SECURED_KEY',  $this->config_values->secured_key),
             );
-            Config::set('payfast', $config);
+            Config::set('payfast.merchantId', $config['merchantId']);
+            Config::set('payfast.securedKey', $config['securedKey']);
         }
 
         $this->payment = $payment;
@@ -105,10 +106,10 @@ class PayFastController extends Controller
      *
      * @param integer $basket_id
      * @param integer $trans_amount
-     * @return void
+     * @return array|null
      */
     public function getAccessToken($basketId = 1, $transAmount = 100) {
-        $tokenApiUrl = 'https://ipguat.apps.net.pk/Ecommerce/api/Transaction/GetAccessToken';
+        $tokenApiUrl = config('payfast.access_token_url');
 
         $merchant = config('payfast.merchantId');
         $securedKey = config('payfast.securedKey');
