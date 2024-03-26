@@ -115,7 +115,8 @@
                                     <span
                                         class="mr-2 switch--custom-label-text text-primary on text-uppercase">{{ translate('on') }}</span>
                                     <span class="mr-2 switch--custom-label-text off text-uppercase">{{ translate('off') }}</span>
-                                    <input type="checkbox" name="status" value="1"
+                                    <input type="hidden" name="status" class="toggle-switch-input-hidden" value="{{$payment['is_active']}}">
+                                    <input type="checkbox" value="1"
                                            class="toggle-switch-input" {{$payment['is_active']==1?'checked':''}}>
                                     <span class="toggle-switch-label text">
                                             <span class="toggle-switch-indicator"></span>
@@ -243,8 +244,10 @@
         $('.switch--custom-label .toggle-switch-input').each( function() {
             if(this.checked) {
                 $(this).closest('.switch--custom-label').addClass('checked')
+                $(this).siblings('.toggle-switch-input-hidden').val(1);
             }else {
                 $(this).closest('.switch--custom-label').removeClass('checked')
+                $(this).siblings('.toggle-switch-input-hidden').val(0);
             }
         })
     }
