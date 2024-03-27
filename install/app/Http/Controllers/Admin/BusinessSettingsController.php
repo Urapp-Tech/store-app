@@ -887,6 +887,13 @@ class BusinessSettingsController extends Controller
             ];
         }
 
+        if ($request->has('gateway_image')) {
+            $additional_data = array_merge( $additional_data, [
+                'gateway_image' =>'image'
+            ]);
+        }
+
+
         $request->validate(array_merge($validation, $additional_data));
 
         $settings = Setting::where('key_name', $request['gateway'])->where('settings_type', 'payment_config')->first();
