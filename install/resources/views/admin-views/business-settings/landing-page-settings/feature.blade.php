@@ -29,7 +29,7 @@
         <!-- End Page Header -->
         <div class="card mb-3">
             <div class="card-body">
-                <form action="{{ route('admin.business-settings.landing-page-settings', 'feature') }}" method="POST"
+                <form action="{{ route('admin.business-settings.landing-page-settings.update', 'feature') }}" method="POST"
                     enctype="multipart/form-data">
                     @php($feature = \App\Models\BusinessSetting::where(['key' => 'feature'])->first())
                     @php($feature = isset($feature->value) ? json_decode($feature->value, true) : null)

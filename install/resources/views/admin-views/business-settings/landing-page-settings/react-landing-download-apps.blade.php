@@ -52,7 +52,7 @@
             @php($download_user_app_sub_title=\App\Models\DataSetting::withoutGlobalScope('translate')->where('type','react_landing_page')->where('key','download_user_app_sub_title')->first())
             @php($download_user_app_links = \App\Models\DataSetting::where(['key'=>'download_user_app_links','type'=>'react_landing_page'])->first())
             @php($download_user_app_links = isset($download_user_app_links->value)?json_decode($download_user_app_links->value, true):null)
-            <form action="{{ route('admin.business-settings.react-landing-page-settings', 'download-app-section') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.react-landing-page-settings.update', 'download-app-section') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('Download User App Section Content')}}</span>
@@ -94,22 +94,22 @@
                                     if(isset($download_user_app_title->translations)&&count($download_user_app_title->translations)){
                                             $download_user_app_title_translate = [];
                                             foreach($download_user_app_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='download_user_app_title'){
                                                     $download_user_app_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                     if(isset($download_user_app_sub_title->translations)&&count($download_user_app_sub_title->translations)){
                                             $download_user_app_sub_title_translate = [];
                                             foreach($download_user_app_sub_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='download_user_app_sub_title'){
                                                     $download_user_app_sub_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                         ?>
                                     <div class="col-md-12 d-none lang_form" id="{{$lang}}-form1">

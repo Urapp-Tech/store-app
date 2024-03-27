@@ -29,7 +29,7 @@
     </div>
     <div class="tab-content">
         <div class="tab-pane fade show active">
-            <form action="{{ route('admin.business-settings.react-landing-page-settings', 'promotion-banner') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.react-landing-page-settings.update', 'promotion-banner') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('Banner Section')}}</span>
@@ -76,7 +76,7 @@
                             <button type="reset" class="btn btn--reset">{{translate('Reset')}}</button>
                             <button type="submit" onclick="" class="btn btn--primary mb-2">{{translate('Add')}}</button>
                         </div>
-                        
+
                     </div>
                 </form>
                 @php($banners = \App\Models\DataSetting::where(['key'=>'promotion_banner','type'=>'react_landing_page'])->first())
@@ -115,7 +115,7 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                
+
                         </div>
                         <!-- End Table -->
                     </div>
@@ -128,8 +128,8 @@
                     </div>
                     @endif
                 </div>
-        
-        
+
+
             <!--  Special review Section View -->
             <div class="modal fade" id="testimonials-section">
                 <div class="modal-dialog modal-lg warning-modal">

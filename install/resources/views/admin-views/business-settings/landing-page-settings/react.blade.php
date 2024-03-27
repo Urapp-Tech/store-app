@@ -56,7 +56,7 @@
                 @php($react_header_banner = isset($react_header_banner->value) ? $react_header_banner->value : null)
                 <div class="row gy-3">
                     <div class="col-sm-6 col-xl-4">
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'react_header') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'react_header') }}"
                             method="POST" enctype="multipart/form-data" class="d-flex flex-column h-100">
                             @csrf
                             <div class="form-group">
@@ -94,7 +94,7 @@
                     <div class="col-sm-6 col-xl-4">
                         @php($app_section_image = \App\Models\BusinessSetting::where(['key' => 'app_section_image'])->first())
                         @php($app_section_image = isset($app_section_image->value) ? $app_section_image->value : null)
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'app_section_image') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'app_section_image') }}"
                             method="POST" enctype="multipart/form-data" class="d-flex flex-column h-100">
                             @csrf
                             <div class="form-group">
@@ -131,7 +131,7 @@
                     <div class="col-sm-6 col-xl-4">
                         @php($footer_logo = \App\Models\BusinessSetting::where(['key' => 'footer_logo'])->first())
                         @php($footer_logo = isset($footer_logo->value) ? $footer_logo->value : null)
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'footer_logo') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'footer_logo') }}"
                             method="POST" enctype="multipart/form-data" class="d-flex flex-column h-100">
                             @csrf
                             <div class="form-group">
@@ -178,7 +178,7 @@
                 </div>
                 <div class="card my-2 mt-5">
                     <div class="card-body">
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'hero-section') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'hero-section') }}"
                             method="POST" enctype="multipart/form-data">
                             @php($hero_section = \App\Models\BusinessSetting::where(['key' => 'hero_section'])->first())
                             @php($hero_section = isset($hero_section->value) ? json_decode($hero_section->value, true) : null)
@@ -237,7 +237,7 @@
                 </div>
                 <div class="card my-2">
                     <div class="card-body">
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'delivery-service-section') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'delivery-service-section') }}"
                             method="POST" enctype="multipart/form-data">
                             @php($delivery_service_section = \App\Models\BusinessSetting::where(['key' => 'delivery_service_section'])->first())
                             @php($delivery_service_section = isset($delivery_service_section->value) ? json_decode($delivery_service_section->value, true) : null)
@@ -311,7 +311,7 @@
                 </div>
                 <div class="card my-2">
                     <div class="card-body">
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'full-banner') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'full-banner') }}"
                             method="POST" enctype="multipart/form-data">
                             @php($full_banner_section = \App\Models\BusinessSetting::where(['key' => 'banner_section_full'])->first())
                             @php($full_banner_section = isset($full_banner_section->value) ? json_decode($full_banner_section->value, true) : null)
@@ -386,7 +386,7 @@
                 </div>
                 <div class="card my-2">
                     <div class="card-body">
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'discount-banner') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'discount-banner') }}"
                             method="POST" enctype="multipart/form-data">
                             @php($discount_section = \App\Models\BusinessSetting::where(['key' => 'discount_banner'])->first())
                             @php($discount_section = isset($discount_section->value) ? json_decode($discount_section->value, true) : null)
@@ -460,7 +460,7 @@
                 </div>
                 <div class="card my-2">
                     <div class="card-body">
-                        <form action="{{ route('admin.business-settings.landing-page-settings', 'banner-section-half') }}"
+                        <form action="{{ route('admin.business-settings.landing-page-settings.update', 'banner-section-half') }}"
                             method="POST" enctype="multipart/form-data">
                             @php($banner_section_half = \App\Models\BusinessSetting::where(['key' => 'banner_section_half'])->first())
                             @php($banner_section_half = isset($banner_section_half->value) ? json_decode($banner_section_half->value, true) : null)

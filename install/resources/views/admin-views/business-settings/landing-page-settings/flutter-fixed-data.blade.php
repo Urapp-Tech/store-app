@@ -55,7 +55,7 @@
     @endif
     <div class="tab-content">
         <div class="tab-pane fade show active">
-            <form action="{{ route('admin.business-settings.flutter-landing-page-settings', 'fixed-header') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.flutter-landing-page-settings.update', 'fixed-header') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('messages.header_section')}}</span>
@@ -87,22 +87,22 @@
                                     if(isset($fixed_header_title->translations)&&count($fixed_header_title->translations)){
                                             $fixed_header_title_translate = [];
                                             foreach($fixed_header_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='fixed_header_title'){
                                                     $fixed_header_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                     if(isset($fixed_header_sub_title->translations)&&count($fixed_header_sub_title->translations)){
                                             $fixed_header_sub_title_translate = [];
                                             foreach($fixed_header_sub_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='fixed_header_sub_title'){
                                                     $fixed_header_sub_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                         ?>
                                     <div class="col-md-12 d-none lang_form" id="{{$lang}}-form1">
@@ -176,8 +176,8 @@
                 <input type="hidden" name="model_name" value="DataSetting" >
                 <input type="hidden" name="image_path" value="fixed_header_image" >
                 <input type="hidden" name="field_name" value="value" >
-            </form> 
-            <form action="{{ route('admin.business-settings.flutter-landing-page-settings', 'fixed-location') }}" method="POST" enctype="multipart/form-data">
+            </form>
+            <form action="{{ route('admin.business-settings.flutter-landing-page-settings.update', 'fixed-location') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('messages.location_setup')}}</span>
@@ -199,12 +199,12 @@
                                 if(isset($fixed_location_title->translations)&&count($fixed_location_title->translations)){
                                         $fixed_location_title_translate = [];
                                         foreach($fixed_location_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='fixed_location_title'){
                                                 $fixed_location_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                     ?>
                                     <div class="row g-3 d-none lang_form" id="{{$lang}}-form2">
@@ -235,7 +235,7 @@
                     </div>
                 </div>
             </form>
-            <form action="{{ route('admin.business-settings.flutter-landing-page-settings', 'fixed-module') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.flutter-landing-page-settings.update', 'fixed-module') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('messages.module_setup')}}</span>
@@ -271,22 +271,22 @@
                                 if(isset($fixed_module_title->translations)&&count($fixed_module_title->translations)){
                                         $fixed_module_title_translate = [];
                                         foreach($fixed_module_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='fixed_module_title'){
                                                 $fixed_module_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                 if(isset($fixed_module_sub_title->translations)&&count($fixed_module_sub_title->translations)){
                                         $fixed_module_sub_title_translate = [];
                                         foreach($fixed_module_sub_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='fixed_module_sub_title'){
                                                 $fixed_module_sub_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                     ?>
                                     <div class="row g-3 d-none lang_form" id="{{$lang}}-form">

@@ -59,7 +59,7 @@
         @php($app_url_ios_deliveryman=\App\Models\BusinessSetting::where(['key'=>'app_url_ios_deliveryman'])->first())
         @php($app_url_ios_deliveryman=$app_url_ios_deliveryman?$app_url_ios_deliveryman->value:null)
 
-        <form action="{{route('admin.business-settings.app-settings')}}" method="post"
+        <form action="{{route('admin.business-settings.app-settings.post')}}" method="post"
         enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="type" value="user_app" >
@@ -142,7 +142,7 @@
         </form>
 
 
-        <form action="{{route('admin.business-settings.app-settings')}}" method="post"
+        <form action="{{route('admin.business-settings.app-settings.post')}}" method="post"
         enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="type" value="store_app" >
@@ -224,7 +224,7 @@
         </form>
 
 
-        <form action="{{route('admin.business-settings.app-settings')}}" method="post"
+        <form action="{{route('admin.business-settings.app-settings.post')}}" method="post"
         enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="type" value="deliveryman_app" >

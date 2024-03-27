@@ -50,7 +50,7 @@
     @endif
     <div class="tab-content">
         <div class="tab-pane fade show active">
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'testimonial-title') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'testimonial-title') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card mb-3">
                     <div class="card-body">
@@ -117,7 +117,7 @@
                     </div>
                 </div>
             </form>
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'testimonial-list') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'testimonial-list') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('Testimonial List Section')}}</span>

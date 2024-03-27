@@ -27,7 +27,7 @@
             @include('admin-views.business-settings.landing-page-settings.top-menu-links.admin-landing-page-links')
         </div>
     </div>
-    
+
     @php($language=\App\Models\BusinessSetting::where('key','language')->first())
     @php($language = $language->value ?? null)
     @php($default_lang = str_replace('_', '-', app()->getLocale()))
@@ -51,7 +51,7 @@
     @php($counter = isset($counter->value)?json_decode($counter->value, true):null)
     <div class="tab-content">
         <div class="tab-pane fade show active">
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'download-counter-section') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'download-counter-section') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <div class="d-flex justify-content-between align-items-center w-100">
@@ -109,7 +109,7 @@
             @php($download_user_app_image=\App\Models\DataSetting::withoutGlobalScope('translate')->where('type','admin_landing_page')->where('key','download_user_app_image')->first())
             @php($download_user_app_links = \App\Models\DataSetting::where(['key'=>'download_user_app_links','type'=>'admin_landing_page'])->first())
             @php($download_user_app_links = isset($download_user_app_links->value)?json_decode($download_user_app_links->value, true):null)
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'download-app-section') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'download-app-section') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('Download User App Section Content')}}</span>
@@ -157,22 +157,22 @@
                                     if(isset($download_user_app_title->translations)&&count($download_user_app_title->translations)){
                                             $download_user_app_title_translate = [];
                                             foreach($download_user_app_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='download_user_app_title'){
                                                     $download_user_app_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                     if(isset($download_user_app_sub_title->translations)&&count($download_user_app_sub_title->translations)){
                                             $download_user_app_sub_title_translate = [];
                                             foreach($download_user_app_sub_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='download_user_app_sub_title'){
                                                     $download_user_app_sub_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                         ?>
                                     <div class="col-md-12 d-none lang_form" id="{{$lang}}-form1">
@@ -314,7 +314,7 @@
                 <input type="hidden" name="model_name" value="DataSetting" >
                 <input type="hidden" name="image_path" value="download_user_app_image" >
                 <input type="hidden" name="field_name" value="value" >
-            </form> 
+            </form>
             <!-- Module Setup Section View -->
             <div class="modal fade" id="download_apps_section">
                 <div class="modal-dialog modal-lg warning-modal">

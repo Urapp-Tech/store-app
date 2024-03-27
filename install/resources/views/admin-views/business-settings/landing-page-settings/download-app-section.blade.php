@@ -80,7 +80,7 @@
                     <h3 class="mt-2 mb-3">Download buttons</h3>
                 </div>
                    <div class="card-body">
-                       <form action="{{ route('admin.business-settings.landing-page-settings', 'app-download-button') }}" method="POST"
+                       <form action="{{ route('admin.business-settings.landing-page-settings.update', 'app-download-button') }}" method="POST"
                            enctype="multipart/form-data">
                            @php($button = \App\Models\BusinessSetting::where(['key' => 'app_download_button'])->first())
                            @php($button = isset($button->value) ? json_decode($button->value, true) : [])

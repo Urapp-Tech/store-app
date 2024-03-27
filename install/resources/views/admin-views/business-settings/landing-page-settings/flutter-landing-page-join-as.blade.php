@@ -60,7 +60,7 @@
     <div class="tab-content">
         <div class="tab-pane fade show active">
 
-            <form action="{{ route('admin.business-settings.flutter-landing-page-settings', 'join-seller') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.flutter-landing-page-settings.update', 'join-seller') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('Join_as_a_Seller_Section')}}</span>
@@ -108,32 +108,32 @@
                                 if(isset($join_seller_title->translations)&&count($join_seller_title->translations)){
                                         $join_seller_title_translate = [];
                                         foreach($join_seller_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='join_seller_title'){
                                                 $join_seller_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                 if(isset($join_seller_sub_title->translations)&&count($join_seller_sub_title->translations)){
                                         $join_seller_sub_title_translate = [];
                                         foreach($join_seller_sub_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='join_seller_sub_title'){
                                                 $join_seller_sub_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                 if(isset($join_seller_button_name->translations)&&count($join_seller_button_name->translations)){
                                         $join_seller_button_name_translate = [];
                                         foreach($join_seller_button_name->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='join_seller_button_name'){
                                                 $join_seller_button_name_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                     ?>
                                     <div class="row g-3 d-none lang_form" id="{{$lang}}-form">
@@ -200,8 +200,8 @@
                     </div>
                 </div>
             </form>
-        
-            <form action="{{ route('admin.business-settings.flutter-landing-page-settings', 'join-delivery') }}" method="POST" enctype="multipart/form-data">
+
+            <form action="{{ route('admin.business-settings.flutter-landing-page-settings.update', 'join-delivery') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <h5 class="card-title mb-3 mt-3">
                     <span class="card-header-icon mr-2"><i class="tio-settings-outlined"></i></span> <span>{{translate('Join_as_a_Deliveryman_Section')}}</span>
@@ -249,32 +249,32 @@
                                 if(isset($join_delivery_man_title->translations)&&count($join_delivery_man_title->translations)){
                                         $join_delivery_man_title_translate = [];
                                         foreach($join_delivery_man_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='join_delivery_man_title'){
                                                 $join_delivery_man_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                 if(isset($join_delivery_man_sub_title->translations)&&count($join_delivery_man_sub_title->translations)){
                                         $join_delivery_man_sub_title_translate = [];
                                         foreach($join_delivery_man_sub_title->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='join_delivery_man_sub_title'){
                                                 $join_delivery_man_sub_title_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                 if(isset($join_delivery_man_button_name->translations)&&count($join_delivery_man_button_name->translations)){
                                         $join_delivery_man_button_name_translate = [];
                                         foreach($join_delivery_man_button_name->translations as $t)
-                                        {   
+                                        {
                                             if($t->locale == $lang && $t->key=='join_delivery_man_button_name'){
                                                 $join_delivery_man_button_name_translate[$lang]['value'] = $t->value;
                                             }
                                         }
-                                
+
                                     }
                                     ?>
                                     <div class="row g-3 d-none lang_form" id="{{$lang}}-form1">
@@ -341,8 +341,8 @@
                     </div>
                 </div>
             </form>
-        
-        
+
+
             <!-- Join As Deliveryman Section View -->
             <div class="modal fade" id="join-as-section">
                 <div class="modal-dialog modal-lg warning-modal">
@@ -356,7 +356,7 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Join As Deliveryman Section View -->
             <div class="modal fade" id="join-as-section-2">
                 <div class="modal-dialog modal-lg warning-modal">

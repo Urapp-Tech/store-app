@@ -29,7 +29,7 @@
     </div>
     <div class="card my-2">
         <div class="card-body">
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'background-color') }}"
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'background-color') }}"
                 method="POST">
                 @php($backgroundChange = \App\Models\BusinessSetting::where(['key' => 'backgroundChange'])->first())
                 @php($backgroundChange = isset($backgroundChange->value) ? json_decode($backgroundChange->value, true) : null)

@@ -50,7 +50,7 @@
         <div
          class="card my-2">
             <div class="card-body">
-                <form action="{{ route('admin.business-settings.landing-page-settings', 'react-feature') }}" method="POST"
+                <form action="{{ route('admin.business-settings.landing-page-settings.update', 'react-feature') }}" method="POST"
                     enctype="multipart/form-data">
                     @php($feature = \App\Models\BusinessSetting::where(['key' => 'react_feature'])->first())
                     @php($feature = isset($feature->value) ? json_decode($feature->value, true) : [])

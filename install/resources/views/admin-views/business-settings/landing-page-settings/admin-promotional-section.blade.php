@@ -49,7 +49,7 @@
     @endif
     <div class="tab-content">
         <div class="tab-pane fade show active">
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'promotional-section') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'promotional-section') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card mb-3">
                     <div class="card-body">

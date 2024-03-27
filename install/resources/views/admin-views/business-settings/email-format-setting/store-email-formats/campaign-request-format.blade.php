@@ -15,9 +15,9 @@
                     <span>
                         {{ translate('messages.Email Templates') }}
                     </span>
-                </h1> 
-                @include('admin-views.business-settings.email-format-setting.partials.email-template-options')   
-            </div>            
+                </h1>
+                @include('admin-views.business-settings.email-format-setting.partials.email-template-options')
+            </div>
             @include('admin-views.business-settings.email-format-setting.partials.store-email-template-setting-links')
         </div>
 
@@ -40,14 +40,14 @@
                                     <span class="toggle-switch-indicator"></span>
                                 </span>
                             </label>
-                        </div> 
+                        </div>
                         <form action="{{route('admin.business-settings.email-status',['store','campaign-request',$mail_status == '1'?0:1])}}" method="get" id="mail-status_form">
                         </form>
                     </div>
                 </div>
                 @php($data=\App\Models\EmailTemplate::where('type','store')->where('email_type', 'campaign_request')->first())
                 @php($template=$template?$template:($data?$data->email_template:1))
-                <form action="{{ route('admin.business-settings.email-setup', ['store','campaign-request']) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('admin.business-settings.email-setup.update', ['store','campaign-request']) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="card border-0">
                         <div class="card-body">
@@ -175,13 +175,13 @@
                                                         </span> --}}
                                                     </label>
                                                     <textarea class="ckeditor form-control" name="body[]">
-                                                        Hi Sabrina, 
+                                                        Hi Sabrina,
                                                     </textarea>
                                                 </div>
                                             </div>
                                             <input type="hidden" name="lang[]" value="default">
                                         @endif
-                                        
+
                                     </div>
                                     <br>
                                     <div>
@@ -422,8 +422,8 @@
                         </div>
                     </div>
                 </form>
-                
-                
+
+
                 <!-- Update Status Modal -->
                 <div class="modal fade" id="place-order-status-modal">
                     <div class="modal-dialog status-warning-modal">
@@ -459,7 +459,7 @@
                                     </div> -->
                                     <div class="btn--container justify-content-center">
                                         <button type="submit" class="btn btn--primary min-w-120" data-dismiss="modal">{{translate('Ok')}}</button>
-                                        <button id="reset_btn" type="reset" class="btn btn--cancel min-w-120" data-dismiss="modal">                
+                                        <button id="reset_btn" type="reset" class="btn btn--cancel min-w-120" data-dismiss="modal">
                                             {{translate("Cancel")}}
                                         </button>
                                     </div>
@@ -468,11 +468,11 @@
                         </div>
                     </div>
                 </div>
-                
+
             </div>
         </div>
 
-        
+
         <!-- Instructions Modal -->
 @include('admin-views.business-settings.email-format-setting.partials.email-template-instructions')
 
@@ -488,12 +488,12 @@
             $(".lang_link").removeClass('active');
             $(".lang_form").addClass('d-none');
             $(this).addClass('active');
-    
+
             let form_id = this.id;
             let lang = form_id.substring(0, form_id.length - 5);
-    
+
             console.log(lang);
-    
+
             $("#"+lang+"-form").removeClass('d-none');
             $("#"+lang+"-form1").removeClass('d-none');
             $("#"+lang+"-form2").removeClass('d-none');

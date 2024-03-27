@@ -51,7 +51,7 @@
     @endif
     <div class="tab-content">
         <div class="tab-pane fade show active">
-            <form action="{{ route('admin.business-settings.admin-landing-page-settings', 'contact-us-section') }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('admin.business-settings.admin-landing-page-settings.update', 'contact-us-section') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="card">
                     <div class="card-body">
@@ -88,22 +88,22 @@
                                     if(isset($contact_us_title->translations)&&count($contact_us_title->translations)){
                                             $contact_us_title_translate = [];
                                             foreach($contact_us_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='contact_us_title'){
                                                     $contact_us_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                     if(isset($contact_us_sub_title->translations)&&count($contact_us_sub_title->translations)){
                                             $contact_us_sub_title_translate = [];
                                             foreach($contact_us_sub_title->translations as $t)
-                                            {   
+                                            {
                                                 if($t->locale == $lang && $t->key=='contact_us_sub_title'){
                                                     $contact_us_sub_title_translate[$lang]['value'] = $t->value;
                                                 }
                                             }
-                                    
+
                                         }
                                         ?>
                                     <div class="col-md-12 d-none lang_form" id="{{$lang}}-form1">
@@ -268,8 +268,8 @@
                 <input type="hidden" name="model_name" value="DataSetting" >
                 <input type="hidden" name="image_path" value="contact_us_image" >
                 <input type="hidden" name="field_name" value="value" >
-            </form> 
-            <!-- Module Setup Section View -->  
+            </form>
+            <!-- Module Setup Section View -->
             <div class="modal fade" id="section-view">
                 <div class="modal-dialog modal-lg warning-modal">
                     <div class="modal-content">
